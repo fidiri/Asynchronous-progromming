@@ -1,89 +1,94 @@
 import React, {useEffect, useState} from 'react';
-import {formatStudentData} from './utils'
 import './App.css';
+import Student from './Component/Student';
+import Students from './Component/Students'
 
 const URL = "https://api.hatchways.io/assessment/students";
 
 function App() {
 
   const [studentData, setStudentData] = useState([]); 
-  const [filteredStudentData, setFilteredStudentData] = useState([]);
-  const [nameFilterInput, setNameFilterInput] = useState("");
-  
+  const [searchName, setSearchsearchName] = useState("");
   const getStudents = (URL) => {
      fetch(URL)
       .then(response => response.json())
-      .then(data => formatStudentData(data.students))
-      .then(formatted => setStudentData(formatted))
-      .then(formatted => setFilteredStudentData(studentData))
+      .then(data => setStudentData(data.students))
       .catch(error => alert('Something went wrong!'));
   }
 
-  const filterContent = (nameInput) => {
-     let filteredContent = [];
 
-      if (nameInput.length) {
-          studentData.forEach(student => {
-            if (student.fullName.toLowerCase().includes(nameInput.toLowerCase())) {
-              filteredContent.push(student);
-            }
-          });
-      }
+function averageGrades(grades){
+  let sum = 0;
+    for (let i=0; i < grades.length; i++) {
+        sum += parseInt(grades[i]);
+    }
+        return  sum / grades.length;
 
-      
-       if (nameInput.length === 0) {
-        setFilteredStudentData(studentData);
-        return; 
-      }
-    
-     setFilteredStudentData(filteredContent);
-    
-  }
+}
 
-  const handleNameFilterInput = (e) => {
-    setNameFilterInput(e.target.value);
-    filterContent(e.target.value); 
-  }
-  
   useEffect(() => {
     getStudents(URL);
   }, []); 
-  
+
+ 
+
+const addTagtoStudent = (tag) => {
+   const newstudentData = [...studentData, {tag}]  
+   setStudentData(newstudentData);
+};
+
+
   return (
-     <>
-     <header>
-     <input
-           placeholder={`Search by name`}
-           value={nameFilterInput}
-           onChange={e => handleNameFilterInput(e)}
-         />
-     </header>
     <main>
     <ul>
-     {
-       filteredStudentData && 
-        filteredStudentData.map((student, index) => {
+    <input className="nameShearch" placeholder="Search by name" onChange={(e) => {setSearchsearchName(e.target.value)}}/>  
+
+     {       
+       studentData && 
+       studentData
+        
+       .filter((studentName) => {
+        return `${studentName.firstName} ${studentName.lastName}`.toUpperCase().includes(searchName.toUpperCase())})
+       .map((student) => {
           return (
-            <article key = {index}>
-               <img 
-                  src = {student.pic} 
-                  alt = {student.fullName}
-                  loading="lazy"
-               />
-            <h1>{student.fullName}</h1>
-            <div>
-               <div>Email: {student.email}</div>
-               <div>Company: {student.company}</div>
-               <div>Skill: {student.skill}</div>
-               <div>Average: {student.average}%</div>
+            <div  className="studentContainer">
+              <img src = {student.pic} alt = "picture"/> 
+              <div className='studentInfo'> 
+                <h2 className='studentName'>
+                  {student.firstName.toUpperCase()} {student.lastName.toUpperCase()}
+                </h2> 
+                <div>
+                Email: {student.email} 
+                </div>
+                <div>
+                Company: {student.company} 
+                </div>
+                <div>
+                Skill: {student.skill} 
+                </div>
+                <div>
+                Average: {averageGrades(student.grades)}%
+                </div><br />
+               
+            
+          
+                <div>
+
+                </div>
+              </div>
             </div>
-        </article>
+            
+             
+           
           )
         })
+        
      }
+    
+    <Students  onAddTag={addTagtoStudent} />
      </ul>
     </main>
-     </>
+     
   );
 }
 
