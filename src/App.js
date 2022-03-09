@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import Student from './Component/Student';
-import Students from './Component/Students'
+import students from './Components/students';
 
 const URL = "https://api.hatchways.io/assessment/students";
 
 function App() {
-
+  
   const [studentData, setStudentData] = useState([]); 
   const [searchName, setSearchsearchName] = useState("");
+  const [value, setValue] = useState("");
   const getStudents = (URL) => {
      fetch(URL)
       .then(response => response.json())
@@ -16,6 +16,7 @@ function App() {
       .catch(error => alert('Something went wrong!'));
   }
 
+  
 
 function averageGrades(grades){
   let sum = 0;
@@ -30,12 +31,12 @@ function averageGrades(grades){
     getStudents(URL);
   }, []); 
 
- 
-
-const addTagtoStudent = (tag) => {
+  
+/*const addTagtoStudent = (tag) => {
    const newstudentData = [...studentData, {tag}]  
    setStudentData(newstudentData);
 };
+*/
 
 
   return (
@@ -68,12 +69,10 @@ const addTagtoStudent = (tag) => {
                 </div>
                 <div>
                 Average: {averageGrades(student.grades)}%
-                </div><br />
-               
-            
-          
+                </div><br />  
+                <students />
                 <div>
-
+                
                 </div>
               </div>
             </div>
@@ -85,7 +84,7 @@ const addTagtoStudent = (tag) => {
         
      }
     
-    <Students  onAddTag={addTagtoStudent} />
+    
      </ul>
     </main>
      
