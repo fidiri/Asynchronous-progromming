@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import students from './Components/students';
+import TagsStudents from './components/TagsStudents';
 
 const URL = "https://api.hatchways.io/assessment/students";
 
@@ -70,7 +70,7 @@ function averageGrades(grades){
                 <div>
                 Average: {averageGrades(student.grades)}%
                 </div><br />  
-                <students />
+                <TagsStudents />
                 <div>
                 
                 </div>
