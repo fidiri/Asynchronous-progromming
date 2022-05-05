@@ -1,38 +1,113 @@
-.App {
+.input__tag {
+  width: 25%; 
+  border-style: hidden hidden solid hidden;
+  margin-bottom: 20px;
+}
+
+.inputs{
+  width: 80%;
+  height: 20px;
+  border-style: hidden hidden solid hidden;
+}
+
+img{
+  width: 80%;
+  margin-right: 10%;
+  border-radius: 100px;
+}
+
+div {
+  margin-bottom: 30px;
+}
+
+#info {
+  display: grid;
+  grid: 
+  [header-start] "empty header buttonSym" 120px
+  [content-start] "img info empty2" 280px
+  /[img] 200px [info] 1fr [empty2] 300px;
+}
+
+#pic {
+  grid-area: img;
+}
+
+#name {
+  grid-area: header;
+}
+
+#infoStud {
+  grid-area: info;
+  border-bottom: solid;
+  width: 90%;
+}
+
+#more {
+  grid-area: buttonSym;
+}
+
+#grades {
+  list-style-type: none;
+  margin-top: 30px;
+  padding-left: 0%;
+}
+
+#buttonSym {
+  border: none;
+  background-color: rgb(131, 45, 165);
+  font-size: 3em;
+  color: rgb(27, 156, 216);
+}
+
+.tag {
+    background-color: #807e7e;
+    display: inline-block;
+    width: fit-content;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
     text-align: center;
-  }
-  
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
+    cursor: pointer;
+    transition-duration: .2s;
+    margin-right: auto;
+
+}
+
+.tag:hover {
+    background-color: #696767;
+    color: rgb(235, 114, 114);
+    animation: wiggle 120ms infinite;
+    animation-timing-function: linear;
+}
+
+.tag:hover .tagDelete {
+    visibility: visible;
+}
+
+.tagDelete {
+    visibility: hidden;
+    position: relative;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-weight: 700;
+    float: right;
+    top: -0.6em;
+    left: 0.3em;
+    color: #0b1b77;
+}
+
+@keyframes wiggle {
+    0% {
+        transform: translate(1px, 0);
     }
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
+    50% {
+        transform: translate(-1px, 0);
     }
-    to {
-      transform: rotate(360deg);
+    100% {
+        transform: translate(1px, 0);
     }
-  }
+}
+
+.tagSubmit {
+    visibility: hidden;
+}
